@@ -50,6 +50,18 @@
             </div>
         </div>
 
+        <div>
+            <div>등록 지역</div>
+            <div th:each="region: ${regions}" class="form-check form-check-inline">
+                <input type="checkbox" th:field="*{regions}" th:value="${region.key}" class="form-check-input">
+                <!--체크박스의 아이디를 찾음 루프로 돌아서 id가 자동생성-->
+<!--                동적으로 아이디가 생성될 때 th:field에 있는, 자동으로 생성된 아이디를 인식해서 그 값을 넣어준다.-->
+                <label th:for="${#ids.prev('regions')}"
+                        th:text="${region.value}" class="form-check-label">서울</label>
+            </div>
+
+        </div>
+
         <div class="row">
             <div class="col">
                 <button class="w-100 btn btn-primary btn-lg" type="submit">상품 등록</button>

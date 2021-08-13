@@ -10,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -19,6 +21,18 @@ import java.util.List;
 public class FormItemController {
 
     private final ItemRepository itemRepository;
+
+    //이 컨트롤러를 호출할땐 항상 얘가  model.addAttribute해서 모델에 담긴다.
+    //그래서 어떤 메소드가 호출되든 자동으로 모델에 담긴다 add, edit...에 코드 중복필요가 없다.
+    @ModelAttribute("regions")
+    public Map<String, String>regions(){
+        Map<String, String>regions = new LinkedHashMap<>();
+        regions.put("SEOUL", "서울");
+        regions.put("BUSAN", "부산");
+        regions.put("JEJU", "제주");
+        return regions;
+//      어떤 메소드를 호출하든 model.addAttribute("regions",regions);가 자동으로 들어가게된다.
+    }
 
     @GetMapping
     public String items(Model model) {
@@ -37,6 +51,13 @@ public class FormItemController {
     @GetMapping("/add")
     public String addForm(Model model) {
         model.addAttribute("item", new Item());
+        
+//        Map<String, String> regions = new LinkedHashMap<>();//순서보장 위해 LinkedHashMap 사용
+//        regions.put("SEOUL", "서울");
+//        regions.put("BUSAN", "부산");
+//        regions.put("JEJU", "제주");
+//        model.addAttribute("regions", regions);
+
         return "form/addForm";
     }
 
@@ -44,6 +65,7 @@ public class FormItemController {
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
 
         log.info("item.open={}", item.getOpen());
+        log.info("item.regions={}", item.getRegions());
 
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
