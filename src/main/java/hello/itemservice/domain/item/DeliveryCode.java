@@ -12,6 +12,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class DeliveryCode {
 
-    private String code;
-    private String displayname;
+    private String code; // fast같은 시스템에서 전달하는 값.
+    private String displayname; //빠른배송, 일반배송등 고객에게 보여주는 값.
 }

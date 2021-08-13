@@ -21,7 +21,7 @@
     <form action="item.html" th:action th:object="${item}" method="post">
         <div>
             <label for="itemName">상품명</label>
-            <!--id,name을 자동으로 만들어준다., id는 label 때문에 남겨둔다.-->
+            <!--id,name을 자동으로 만들어준다., id는 label 때문에 남겨둔다.th:field="*{itemName}" == th:field="${item.itemName}"-->
             <input type="text" id="itemName"  th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요">
         </div>
         <div>
@@ -34,6 +34,21 @@
         </div>
 
         <hr class="my-4">
+        <!-- single checkbox -->
+        <div>판매 여부</div>
+        <div>
+            <div class="form-check">
+                <input type="checkbox" id="open" th:field="*{open}"  class="form-check-input" >
+                <!--th:field="${item.open}" 이래 해도 된다. -->
+
+<!--                <input type="hidden" name="_open" value="on"/> &lt;!&ndash; 히든필드 추가(체크박스 체크안하면 값이 안넘어와서)&ndash;&gt;-->
+<!--                &lt;!&ndash;체크박스 경우, _open 처럼 기존 체크박스 이름 앞에 언더스코어를 붙여서 전송하면 체크를 해제했다고 인식할 수 있다.-->
+<!--                히든필드는 항상 전송된다. 따라서 체크를 해제한 경우 'open'은 전송되지 않고 '_open'만 전송되는데, 이 경우 스프링 MVC는-->
+<!--                체크를 해제했다고 판단한다.-->
+<!--                체크박스를 체크하면 스프링 MVC가 open에 값이 있는것ㅇ르 확인하고 사용하낟. 이때 _open은 무시한다.&ndash;&gt;-->
+                <label for="open" class="form-check-label">판매 오픈</label>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col">
